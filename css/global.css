@@ -49,7 +49,7 @@ html {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--heading-font);
     font-weight: 700;
-    line-height: 1.2em;
+    line-height: 1.4em;
     color: var(--text-color);
 }
 h1 {
@@ -350,14 +350,23 @@ b {
     overflow: hidden;
     transition: background-position 0.5s ease-in-out;
 }
+.section-heading.left h2,
 .section-heading.left p {
     text-align: left;
 }
+.section-heading.center h2,
 .section-heading.center p {
     text-align: center;
 }
+.section-heading.right h2,
 .section-heading.right p {
     text-align: right;
+}
+
+.sticky {
+    position: sticky;
+    top: 30px;
+    align-self: flex-start;
 }
 /* === END GLOBAL SYLES === */
 
@@ -1039,6 +1048,29 @@ body.mobile-menu-open {
 }
 /* === END SERVICES SECTION === */
 
+/* === SPECIALIZE SECTION === */
+.specialize-section {
+    background-color: var(--alt-black-color);
+}
+.specialize.cards .card {
+    padding: 20px;
+    border: 1px solid rgb(36, 36, 36);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 
+        0 8px 32px rgba(31, 31, 31, 0.1),
+        inset 0 1px 20px rgba(31, 31, 31, 0.5),
+        inset 0 -1px 0 rgb(46, 46, 46),
+        inset 0 0 4px 2px rgba(43, 43, 43, 0.2);
+}
+.specialize.cards .card p {
+    font-size: 21px;
+}
+.specialize.cards .card:hover {
+    background-color: var(--alt-black-color);
+    transform: translateY(-1px);
+}
+/* === END SPECIALIZE SECTION === */
+
 /* === AWARD SECTION === */
 .award-section {
     background-color: var(--alt-black-color);
@@ -1501,23 +1533,34 @@ body.mobile-menu-open {
 .use-cases-section {
     background-color: var(--alt-black-color);
 }
+
 .use-case-card {
     position: relative;
     overflow: hidden;
-    height: 350px;
+    min-height: 350px;
     padding: 20px;
 }
-.use-case-card img {
+
+/* ✅ FIX: make the image wrapper fill the card and be the positioning context */
+.use-case-card-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 0;
+}
+
+.use-case-card img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border: 1px solid var(--primary-color);
     transition: all 0.3s ease-in-out;
-    z-index: 0;
+    display: block;
 }
+
+/* ✅ Now ::after correctly overlays the image wrapper */
 .use-case-card-image::after {
     content: '';
     position: absolute;
@@ -1528,38 +1571,50 @@ body.mobile-menu-open {
     background: linear-gradient(to bottom, transparent, rgba(22, 22, 22, .2), rgba(22, 22, 22, 0.6));
     z-index: 1;
 }
+
 .use-case-card:hover img {
     transform: scale(1.1);
     filter: brightness(0.5);
 }
+
 .use-case-card-content {
     position: absolute;
-    top: 285px;
+    bottom: 20px;
     left: 20px;
+    right: 20px;
     z-index: 1;
-    transform: translateY(60px);
+    transform: translateX(-100%);
     transition: all 0.3s ease-in-out;
+    padding-right: 50px;
 }
+
+.use-case-card-content .icon {
+    width: 40px;
+}
+
 .use-case-card-content::before {
     content: '';
     position: absolute;
-    top: -40px;
-    left: -8px;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    right: -20px;
+    bottom: 0;
     width: 30px;
     height: 30px;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"></path></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"></path></svg>');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     z-index: 1;
-    stroke: var(--white-color);
+    transition: all 0.3s ease-in-out;
+    transform: rotate(90deg);
 }
+
 .use-case-card:hover .use-case-card-content {
-    transform: translateY(0);
+    transform: translateX(0);
 }
+.use-case-card:hover .use-case-card-content::before {
+    right: 0px;
+}
+
 .use-case-card h4 {
     color: var(--text-color);
     font-size: 18px;
@@ -1980,7 +2035,6 @@ body.mobile-menu-open {
         height: 30px;
     }
 
-
     .form-card-title {
         font-size: 14px;
         font-weight: 700;
@@ -2045,18 +2099,18 @@ body.mobile-menu-open {
     }
 
     /* BEFORE AND AFTER SECTION */
-    .section-heading-has-button {
+    .before-after-section .section-heading-has-button {
         flex-direction: column;
         gap: 20px;
     }
-    .section-heading-has-button :is(h2, p) {
+    .before-after-section .section-heading-has-button :is(h2, p) {
         text-align: center;
     }
-    .section-heading-has-button {
+    .before-after-section .section-heading-has-button {
         flex-direction: column;
         gap: 20px;
     }
-    .section-heading-has-button .column-half:has(.cta) {
+    .before-after-section .section-heading-has-button .column-half:has(.cta) {
         align-items: center;
     }
     .before-after-section .section-heading-has-button .column-half {
@@ -2109,6 +2163,24 @@ body.mobile-menu-open {
         border: 1px solid var(--primary-color);
         transition: all 0.3s ease-in-out;
     } 
+
+    /* SPECIALIZE */
+    .specialize-wrapper.flex-row {
+        flex-direction: column !important;
+    }
+    .specialize.cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+    .specialize-section .column-md,
+    .specialize-section .column-wide {
+        width: 100% !important;
+    }
+
+    .specialize.cards .card p {
+        font-size: 14px;
+    }
 
     /* PRODUCT SECTION */
     .product-card a.product-image,
@@ -2250,19 +2322,8 @@ body.mobile-menu-open {
     .use-case-card {
         position: relative;
         overflow: hidden;
-        height: 250px;
+        min-height: 250px;
         padding: 20px;
-    }
-    .use-case-card img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border: 1px solid var(--primary-color);
-        transition: all 0.3s ease-in-out;
-        z-index: 0;
     }
     .use-case-card-image::after {
         content: '';
@@ -2278,27 +2339,16 @@ body.mobile-menu-open {
         transform: scale(1.1);
         filter: brightness(0.5);
     }
+
     .use-case-card-content {
-        position: absolute;
-        top: 287px;
-        left: 20px;
-        z-index: 1;
-        transform: translateY(60px);
-        transition: all 0.3s ease-in-out;
-        width: calc(100% - 40px);
+        padding-right: 30px;
     }
-    .use-case-card:hover .use-case-card-content {
-        transform: translateY(-40px);
-    }
+    
     .use-case-card h4 {
         color: var(--text-color);
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 600;
         text-wrap: balance;
-    }
-
-    .use-case-card:hover .use-case-card-content {
-        transform: translateY(-165px);
     }
 
     /* WHY CHOOSE PRESTIGE */
@@ -2399,8 +2449,3 @@ body.mobile-menu-open {
     }
 
 }
-
-
-
-
-

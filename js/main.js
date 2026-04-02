@@ -334,32 +334,22 @@
 })();
 
 // Map Location Switcher
-function changeMapLocation(location) {
-    const maps = {
-        oregon: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2915520.6737326938!2d-122.67648819999999!3d43.8041334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54936e7c9b9c9ae1%3A0x6c9f9e4f7f5e5e5e!2sOregon!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus',
-        portland: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d178858.81726307178!2d-122.79051984999999!3d45.5202471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54950b0b7da97427%3A0x1c36b9e6f6d18591!2sPortland%2C%20OR!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus',
-        salem: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d89579.61073515625!2d-123.08597959999999!3d44.9428975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54bffdf31bfb6283%3A0x44f6b067144c470!2sSalem%2C%20OR!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus',
-        eugene: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95260.88475313593!2d-123.16881409999999!3d44.0505054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54c119b0ac501919%3A0x57ec61894a43894d!2sEugene%2C%20OR!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus',
-        bend: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92559.97693486394!2d-121.36150109999999!3d44.0581728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54b8c2351cb45299%3A0x95a0a55f778c2559!2sBend%2C%20OR!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus',
-        medford: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95638.35847328823!2d-122.93526309999999!3d42.3265152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54cf73e39f32e7f9%3A0x62a3f9a1c99603cf!2sMedford%2C%20OR!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus'
-    };
-    
+function changeMapLocation(btn, placeName) {
     const iframe = document.getElementById('serviceMap');
     const buttons = document.querySelectorAll('.location-btn');
-    
-    if (iframe && maps[location]) {
+
+    if (iframe) {
         iframe.style.opacity = '0.5';
-        
+
         setTimeout(() => {
-            iframe.src = maps[location];
-            
+            iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(placeName)}&output=embed`;
             setTimeout(() => {
                 iframe.style.opacity = '1';
             }, 100);
         }, 300);
-        
-        buttons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
     }
 }
 
